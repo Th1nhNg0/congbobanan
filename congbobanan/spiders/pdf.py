@@ -1,5 +1,6 @@
 import scrapy
 from pathlib import Path
+import pymupdf
 
 
 class ToaanSpider(scrapy.Spider):
@@ -23,14 +24,26 @@ class ToaanSpider(scrapy.Spider):
         "COOKIES_ENABLED": False,
         # TIME OUT 180
         "DOWNLOAD_TIMEOUT": 180,
+        "DOWNLOAD_FAIL_ON_DATALOSS": False,
     }
 
     def parse(self, response):
         filename = response.url.split("/")[-2] + ".pdf"
         output_dir = Path("output")
-        # Path(filename).write_bytes(response.body)
         output_dir.mkdir(exist_ok=True)
         Path(output_dir / filename).write_bytes(response.body)
+
+        doc = pymupdf.open(output_dir / filename)
+        text = ""
+        for page in doc:
+            text += page.get_text()
+        Path(output_dir / filename.replace(".pdf", ".txt")).write_bytes(
+            text.encode("utf-8")
+        )
+        doc.close()
+
+        # remove pdf file
+        Path(output_dir / filename).unlink()
 
     def errback_httpbin(self, failure):
         with open("failed_urls.txt", "a") as f:

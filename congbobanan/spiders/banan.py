@@ -11,8 +11,8 @@ class ToaanSpider(scrapy.Spider):
     ]
 
     custom_settings = {
-        "FEED_FORMAT": "csv",
-        "FEED_URI": "output.csv",
+        "FEED_FORMAT": "jsonlines",
+        "FEED_URI": "output.jsonl",
         "CONCURRENT_REQUESTS": 128,
         "CONCURRENT_REQUESTS_PER_DOMAIN": 128,
         "CONCURRENT_REQUESTS_PER_IP": 128,

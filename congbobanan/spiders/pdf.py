@@ -23,7 +23,7 @@ class ToaanSpider(scrapy.Spider):
         "RETRY_TIMES": 0,
         "COOKIES_ENABLED": False,
         # TIME OUT 180
-        "DOWNLOAD_TIMEOUT": 180,
+        "DOWNLOAD_TIMEOUT": 600,
         "DOWNLOAD_FAIL_ON_DATALOSS": False,
     }
 

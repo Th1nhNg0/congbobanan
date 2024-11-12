@@ -164,3 +164,4 @@ output/*
 JOBDIR/*
 output.csv
 banan.txt
+output.jsonl

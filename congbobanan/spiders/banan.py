@@ -13,9 +13,9 @@ class ToaanSpider(scrapy.Spider):
     custom_settings = {
         "FEED_FORMAT": "jsonlines",
         "FEED_URI": "output.jsonl",
-        "CONCURRENT_REQUESTS": 128,
-        "CONCURRENT_REQUESTS_PER_DOMAIN": 128,
-        "CONCURRENT_REQUESTS_PER_IP": 128,
+        "CONCURRENT_REQUESTS": 256,
+        "CONCURRENT_REQUESTS_PER_DOMAIN": 256,
+        "CONCURRENT_REQUESTS_PER_IP": 256,
         "LOG_LEVEL": "INFO",
         # ignore retry
         "RETRY_ENABLED": False,
@@ -52,8 +52,9 @@ class ToaanSpider(scrapy.Spider):
             value = row.css("span::text").get()
             if key and value:
                 item[key] = value
+
         # pdf_url = response.url.replace("2ta", "5ta")
-        # if item["type"] == "banan":
+        # if "Loại án:" in item and item["Loại án:"].lower() == "hình sự":
         #     yield scrapy.Request(pdf_url, callback=self.parse_pdf)
 
         yield item
